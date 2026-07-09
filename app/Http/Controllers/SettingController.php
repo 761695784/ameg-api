@@ -2,48 +2,42 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Models\Setting;
 use Illuminate\Http\Request;
 
 class SettingController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * GET /api/settings
+     * Renvoie les paramètres publics du site (logo, whatsapp, emails, réseaux sociaux)
+     * pour que le frontend Next.js les affiche dans le header/footer.
      */
     public function index()
     {
-        //
+        $keys = [
+            'logo', 'whatsapp_number', 'contact_email', 'contact_phone',
+            'address', 'facebook_url', 'instagram_url', 'linkedin_url',
+        ];
+
+        $settings = collect($keys)->mapWithKeys(fn ($key) => [$key => Setting::get($key)]);
+
+        return response()->json($settings);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * PUT /api/admin/settings (protégé)
      */
-    public function store(Request $request)
+    public function update(Request $request)
     {
-        //
-    }
+        $data = $request->validate([
+            'settings' => ['required', 'array'],
+        ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Setting $setting)
-    {
-        //
-    }
+        foreach ($data['settings'] as $key => $value) {
+            Setting::set($key, $value);
+        }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Setting $setting)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Setting $setting)
-    {
-        //
+        return response()->json(['message' => 'Paramètres mis à jour']);
     }
 }

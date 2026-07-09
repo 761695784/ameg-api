@@ -2,48 +2,57 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreContactMessageRequest;
 use App\Models\ContactMessage;
 use Illuminate\Http\Request;
 
 class ContactMessageController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * POST /api/contact-messages
+     */
+    public function store(StoreContactMessageRequest $request)
+    {
+        $message = ContactMessage::create($request->validated());
+
+        // TODO: notifier l'admin par email
+
+        return response()->json($message, 201);
+    }
+
+    /**
+     * GET /api/admin/contact-messages
      */
     public function index()
     {
-        //
+        return response()->json(ContactMessage::latest()->paginate(20));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
     public function show(ContactMessage $contactMessage)
     {
-        //
+        if ($contactMessage->status === 'nouveau') {
+            $contactMessage->update(['status' => 'lu']);
+        }
+
+        return response()->json($contactMessage);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, ContactMessage $contactMessage)
     {
-        //
+        $data = $request->validate([
+            'status' => ['required', 'in:nouveau,lu,traite'],
+        ]);
+
+        $contactMessage->update($data);
+
+        return response()->json($contactMessage);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(ContactMessage $contactMessage)
     {
-        //
+        $contactMessage->delete();
+
+        return response()->json(null, 204);
     }
 }
