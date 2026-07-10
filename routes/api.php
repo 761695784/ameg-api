@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\CatalogImportController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ContactMessageController;
@@ -40,6 +41,21 @@ Route::get('/realisations/{slug}', [RealisationController::class, 'show']);
 Route::post('/quote-requests', [QuoteRequestController::class, 'store']);
 Route::post('/project-study-requests', [ProjectStudyRequestController::class, 'store']);
 Route::post('/contact-messages', [ContactMessageController::class, 'store']);
+
+/*
+|--------------------------------------------------------------------------
+| Authentification admin (Sanctum SPA / cookies)
+|--------------------------------------------------------------------------
+*/
+
+Route::post('/login', [AuthController::class, 'login']);
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::get('/user', [AuthController::class, 'me']);
+});
+
+
 
 /*
 |--------------------------------------------------------------------------
