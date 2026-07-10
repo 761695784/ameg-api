@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\CatalogImportController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ContactMessageController;
@@ -62,4 +63,7 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
     Route::apiResource('contact-messages', ContactMessageController::class)->except(['store']);
 
     Route::put('/settings', [SettingController::class, 'update']);
+
+    // Importation de catalogue (Excel + ZIP d'images)
+    Route::post('/catalog-import', [CatalogImportController::class, 'store']);
 });
