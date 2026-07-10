@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Api\CatalogImportController;
+use App\Http\Controllers\CatalogImportController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
@@ -83,5 +83,6 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
     Route::put('/settings', [SettingController::class, 'update']);
 
     // Importation de catalogue (Excel + ZIP d'images)
-    Route::post('/catalog-import', [CatalogImportController::class, 'store']);
+    // Route::post('/catalog-import', [CatalogImportController::class, 'store']);
 });
+Route::post('/catalog-import', [CatalogImportController::class, 'store']);
