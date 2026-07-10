@@ -6,6 +6,7 @@ use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ContactMessageController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductPdfController;
 use App\Http\Controllers\ProjectStudyRequestController;
 use App\Http\Controllers\QuoteRequestController;
 use App\Http\Controllers\RealisationController;
@@ -30,6 +31,7 @@ Route::get('/brands', [BrandController::class, 'index']);
 
 Route::get('/products', [ProductController::class, 'index']);
 Route::get('/products/{slug}', [ProductController::class, 'show']);
+Route::get('/products/{slug}/technical-sheet', [ProductPdfController::class, 'download']);
 
 Route::get('/services', [ServiceController::class, 'index']);
 Route::get('/services/{slug}', [ServiceController::class, 'show']);
