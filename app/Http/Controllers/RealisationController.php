@@ -22,6 +22,9 @@ class RealisationController extends Controller
         return response()->json($query->latest()->paginate(12));
     }
 
+    /**
+     * @urlParam slug string required Le slug de la réalisation. Example: hotel-le-flamboyant-ziguinchor
+     */
     public function show(string $slug)
     {
         $realisation = Realisation::where('slug', $slug)

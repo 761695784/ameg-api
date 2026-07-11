@@ -16,6 +16,9 @@ class ServiceController extends Controller
         );
     }
 
+    /**
+     * @urlParam slug string required Le slug du service. Example: installation-de-cuisines-professionnelles
+     */
     public function show(string $slug)
     {
         return response()->json(

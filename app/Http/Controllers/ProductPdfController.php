@@ -12,6 +12,8 @@ class ProductPdfController extends Controller
     /**
      * GET /api/products/{slug}/technical-sheet
      * Génère et télécharge la fiche technique PDF brandée AMEG pour un produit.
+     *
+     * @urlParam slug string required Le slug du produit. Example: ar612fx-armoire-inox-304-portes-coulissantes-doublees-toit-plat-3-etageres-reglables
      */
     public function download(string $slug)
     {

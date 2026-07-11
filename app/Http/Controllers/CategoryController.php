@@ -25,6 +25,8 @@ class CategoryController extends Controller
 
     /**
      * GET /api/categories/{slug}
+     *
+     * @urlParam slug string required Le slug de la catégorie. Example: equipements-de-cuisson
      */
     public function show(string $slug)
     {

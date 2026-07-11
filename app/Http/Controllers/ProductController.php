@@ -56,6 +56,8 @@ class ProductController extends Controller
     /**
      * GET /api/products/{slug}
      * Fiche produit complète + produits similaires (même sous-catégorie).
+     *
+     * @urlParam slug string required Le slug du produit. Example: ar612fx-armoire-inox-304-portes-coulissantes-doublees-toit-plat-3-etageres-reglables
      */
     public function show(string $slug)
     {
