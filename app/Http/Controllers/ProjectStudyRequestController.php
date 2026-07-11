@@ -1,12 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProjectStudyRequestRequest;
+use App\Mail\ProjectStudyRequestAdminNotification;
+use App\Mail\ProjectStudyRequestClientAcknowledgment;
 use App\Models\ProjectStudyRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class ProjectStudyRequestController extends Controller
@@ -45,7 +48,13 @@ class ProjectStudyRequestController extends Controller
             return $projectRequest;
         });
 
-        // TODO: notifier l'admin par email
+        // Email vers AMEG International (notification interne)
+        Mail::to(config('ameg.admin_email'), config('ameg.admin_name'))
+            ->send(new ProjectStudyRequestAdminNotification($projectRequest));
+
+        // Accusé de réception automatique envoyé au client
+        Mail::to($projectRequest->email, $projectRequest->name)
+            ->send(new ProjectStudyRequestClientAcknowledgment($projectRequest));
 
         return response()->json($projectRequest->load('documents'), 201);
     }

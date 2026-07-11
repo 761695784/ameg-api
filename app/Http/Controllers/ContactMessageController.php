@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreContactMessageRequest;
+use App\Mail\ContactMessageAdminNotification;
+use App\Mail\ContactMessageClientAcknowledgment;
 use App\Models\ContactMessage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class ContactMessageController extends Controller
 {
@@ -16,7 +19,13 @@ class ContactMessageController extends Controller
     {
         $message = ContactMessage::create($request->validated());
 
-        // TODO: notifier l'admin par email
+        // Email vers AMEG International (notification interne)
+        Mail::to(config('ameg.admin_email'), config('ameg.admin_name'))
+            ->send(new ContactMessageAdminNotification($message));
+
+        // Accusé de réception automatique envoyé au client
+        Mail::to($message->email, $message->name)
+            ->send(new ContactMessageClientAcknowledgment($message));
 
         return response()->json($message, 201);
     }

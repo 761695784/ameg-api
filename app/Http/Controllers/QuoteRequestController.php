@@ -1,12 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreQuoteRequestRequest;
+use App\Mail\QuoteRequestAdminNotification;
+use App\Mail\QuoteRequestClientAcknowledgment;
 use App\Models\Product;
 use App\Models\QuoteRequest;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class QuoteRequestController extends Controller
 {
@@ -43,7 +46,13 @@ class QuoteRequestController extends Controller
             return $quoteRequest;
         });
 
-        // TODO: notifier l'admin par email (Mail::to(...)->send(new NewQuoteRequest($quoteRequest)))
+        // Email vers AMEG International (notification interne)
+        Mail::to(config('ameg.admin_email'), config('ameg.admin_name'))
+            ->send(new QuoteRequestAdminNotification($quoteRequest));
+
+        // Accusé de réception automatique envoyé au client
+        Mail::to($quoteRequest->email, $quoteRequest->first_name . ' ' . $quoteRequest->last_name)
+            ->send(new QuoteRequestClientAcknowledgment($quoteRequest));
 
         return response()->json($quoteRequest->load('items'), 201);
     }
