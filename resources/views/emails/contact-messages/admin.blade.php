@@ -1,13 +1,13 @@
 @component('mail::message')
 # Nouveau message de contact
 
-**Nom :** {{ $contactMessage->name }}
-**Email :** {{ $contactMessage->email }}
+**Nom :** {{ $contactMessage->name }} <br>
+**Email :** {{ $contactMessage->email }} <br>
 @if($contactMessage->phone)
-**Téléphone :** {{ $contactMessage->phone }}
+**Téléphone :** {{ $contactMessage->phone }} <br>
 @endif
 @if($contactMessage->subject)
-**Sujet :** {{ $contactMessage->subject }}
+**Sujet :** {{ $contactMessage->subject }} <br>
 @endif
 
 ## Message

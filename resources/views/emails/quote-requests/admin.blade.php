@@ -3,14 +3,14 @@
 
 Une nouvelle demande de devis vient d'être soumise sur le site.
 
-**Client :** {{ $quoteRequest->first_name }} {{ $quoteRequest->last_name }}
+**Client :** {{ $quoteRequest->first_name }} {{ $quoteRequest->last_name }} <br>
 @if($quoteRequest->company)
-**Société :** {{ $quoteRequest->company }}
+**Société :** {{ $quoteRequest->company }} <br>
 @endif
-**Téléphone :** {{ $quoteRequest->phone }}
-**Email :** {{ $quoteRequest->email }}
+**Téléphone :** {{ $quoteRequest->phone }} <br>
+**Email :** {{ $quoteRequest->email }}  <br>
 @if($quoteRequest->city)
-**Ville :** {{ $quoteRequest->city }}
+**Ville :** {{ $quoteRequest->city }}  <br>
 @endif
 
 ## Produits demandés

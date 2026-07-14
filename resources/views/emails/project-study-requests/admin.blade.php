@@ -1,23 +1,23 @@
 @component('mail::message')
 # Nouvelle demande d'étude de projet
 
-**Nom :** {{ $projectStudyRequest->name }}
+**Nom :** {{ $projectStudyRequest->name }} <br>
 @if($projectStudyRequest->company)
-**Société :** {{ $projectStudyRequest->company }}
+**Société :** {{ $projectStudyRequest->company }} <br>
 @endif
-**Téléphone :** {{ $projectStudyRequest->phone }}
-**Email :** {{ $projectStudyRequest->email }}
+**Téléphone :** {{ $projectStudyRequest->phone }} <br>
+**Email :** {{ $projectStudyRequest->email }} <br>
 @if($projectStudyRequest->city)
-**Ville :** {{ $projectStudyRequest->city }}
+**Ville :** {{ $projectStudyRequest->city }} <br>
 @endif
 @if($projectStudyRequest->establishment_type)
-**Type d'établissement :** {{ $projectStudyRequest->establishment_type }}
+**Type d'établissement :** {{ $projectStudyRequest->establishment_type }} <br>
 @endif
 @if($projectStudyRequest->estimated_budget)
-**Budget estimé :** {{ $projectStudyRequest->estimated_budget }}
+**Budget estimé :** {{ $projectStudyRequest->estimated_budget }} <br>
 @endif
 @if($projectStudyRequest->desired_deadline)
-**Délai souhaité :** {{ $projectStudyRequest->desired_deadline }}
+**Délai souhaité :** {{ $projectStudyRequest->desired_deadline }} <br>
 @endif
 
 ## Description du projet
