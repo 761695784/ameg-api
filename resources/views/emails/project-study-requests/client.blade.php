@@ -13,4 +13,6 @@ Nous avons bien reçu votre demande d'étude de projet. Notre équipe l'étudie 
 
 Merci de votre confiance,<br>
 **AMEG International**
+
+@include('emails.partials.signature')
 @endcomponent

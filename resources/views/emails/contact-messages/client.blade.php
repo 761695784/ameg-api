@@ -8,4 +8,6 @@ Nous avons bien reçu votre message et **nous reviendrons vers vous très procha
 
 Merci de votre confiance,<br>
 **AMEG International**
+
+@include('emails.partials.signature')
 @endcomponent

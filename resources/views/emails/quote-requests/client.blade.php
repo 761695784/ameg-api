@@ -17,4 +17,6 @@ Si vous avez une question urgente, n'hésitez pas à nous contacter directement.
 
 Merci de votre confiance,<br>
 **AMEG International**
+
+@include('emails.partials.signature')
 @endcomponent

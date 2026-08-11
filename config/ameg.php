@@ -18,8 +18,8 @@ return [
     | Utilisées dans la fiche technique PDF, le footer du site, le bouton
     | WhatsApp flottant, etc.
     */
-    'phone' => env('AMEG_PHONE', '33 825 39 00 '),
-    'whatsapp_number' => env('AMEG_WHATSAPP', '221766043191'), // format international sans "+", pour les liens wa.me
+    'phone' => env('AMEG_PHONE', '33 824 77 63 / +221 77 646 43 41'),
+    'whatsapp_number' => env('AMEG_WHATSAPP', '221776464341'), // format international sans "+", pour les liens wa.me
     'email' => env('AMEG_CONTACT_EMAIL', 'contactameginternational@gmail.com'),
     'website' => env('AMEG_WEBSITE', 'ameginternational.com'),
     'address' => env('AMEG_ADDRESS', 'Dakar, POINT E Rue P-170 , Sénégal'),
