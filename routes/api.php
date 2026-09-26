@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ContactMessageController;
+use App\Http\Controllers\MobileController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductPdfController;
 use App\Http\Controllers\ProjectStudyRequestController;
@@ -83,6 +84,46 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
     Route::put('/settings', [SettingController::class, 'update']);
 
     // Importation de catalogue (Excel + ZIP d'images)
-    // Route::post('/catalog-import', [CatalogImportController::class, 'store']);
+    // // Import de catalogue : réservé aux utilisateurs connectés (auparavant accessible sans authentification)
+Route::post('/catalog-import', [CatalogImportController::class, 'store'])->middleware('auth:sanctum');
+
+/*
+|--------------------------------------------------------------------------
+| Application mobile « Ameg Business » (jetons Sanctum)
+|--------------------------------------------------------------------------
+| L'app s'authentifie avec un jeton (Authorization: Bearer ...) et non par
+| cookies. Les routes /api/admin/* acceptent aussi ce jeton.
+*/
+
+Route::post('/mobile/login', [MobileController::class, 'login'])->middleware('throttle:10,1');
+
+Route::middleware('auth:sanctum')->prefix('mobile')->group(function () {
+    Route::post('/logout', [MobileController::class, 'logout']);
+    Route::get('/me', [MobileController::class, 'me']);
+    Route::get('/catalog', [MobileController::class, 'catalog']);
+    Route::get('/quote-requests', [MobileController::class, 'quoteRequests']);
+    Route::get('/quote-requests/{quoteRequest}', [MobileController::class, 'quoteRequest']);
+    Route::patch('/quote-requests/{quoteRequest}', [MobileController::class, 'updateQuoteRequest']);
 });
-Route::post('/catalog-import', [CatalogImportController::class, 'store']);
+});
+// Import de catalogue : réservé aux utilisateurs connectés (auparavant accessible sans authentification)
+Route::post('/catalog-import', [CatalogImportController::class, 'store'])->middleware('auth:sanctum');
+
+/*
+|--------------------------------------------------------------------------
+| Application mobile « Ameg Business » (jetons Sanctum)
+|--------------------------------------------------------------------------
+| L'app s'authentifie avec un jeton (Authorization: Bearer ...) et non par
+| cookies. Les routes /api/admin/* acceptent aussi ce jeton.
+*/
+
+Route::post('/mobile/login', [MobileController::class, 'login'])->middleware('throttle:10,1');
+
+Route::middleware('auth:sanctum')->prefix('mobile')->group(function () {
+    Route::post('/logout', [MobileController::class, 'logout']);
+    Route::get('/me', [MobileController::class, 'me']);
+    Route::get('/catalog', [MobileController::class, 'catalog']);
+    Route::get('/quote-requests', [MobileController::class, 'quoteRequests']);
+    Route::get('/quote-requests/{quoteRequest}', [MobileController::class, 'quoteRequest']);
+    Route::patch('/quote-requests/{quoteRequest}', [MobileController::class, 'updateQuoteRequest']);
+});
