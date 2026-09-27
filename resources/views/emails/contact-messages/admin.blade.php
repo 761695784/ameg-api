@@ -19,4 +19,6 @@ Voir le message dans le tableau de bord
 
 Merci,<br>
 Site {{ config('app.name') }}
+
+@include('emails.partials.signature')
 @endcomponent
